@@ -1,0 +1,31 @@
+body{
+    font-family: Verdana, sans-serif
+}
+
+#header{
+    margin-top: 20px;
+    text-align: center;
+}
+
+#searchBar{
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 200px;
+}
+#main{
+    padding: 20px;
+    display: grid;
+    grid-template-columns:300px  300px;
+    grid-template-rows: 100px;
+    justify-content: center;
+    text-align: center;
+}
+
+#footer{
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+}
