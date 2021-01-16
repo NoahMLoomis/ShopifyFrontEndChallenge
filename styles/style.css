@@ -11,7 +11,11 @@ body{
     width: 80%;
     margin-right: auto;
     margin-left: auto;
-    border-radius: 200px;
+    border-radius: 5px;
+}
+
+#searchBar:active{
+    border: none;
 }
 #main{
     padding: 20px;
