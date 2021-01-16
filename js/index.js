@@ -4,60 +4,91 @@ const results = document.querySelector("#movieResultList");
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 let nominatedMovies=[];
 
-//Always use const!!!
-for (let i=0; i<26; i++){
 
+const checkNominate = (movie) => {
+    let movieAlreadyNominated = false;
+    nominatedMovies.forEach(nomMovie => {
+        if (movie === nomMovie){
+            movieAlreadyNominated = true;
+        }
+    })
+
+    return movieAlreadyNominated;
+    
 }
 
 const searchForMovie = (link) => {
     fetch(link)
         .then(data => data.json())
-        .then(movie => {
+        .then(movies => {
 
-            console.log(movie);
-            if (movie.Response === "False"){
+            console.log(movies);
+            if (movies.Response === "False"){
                 results.innerHTML+= `${movie.Error}`;
             }else{
-                results.innerHTML+= `<li>${movie.Title}, ${movie.Year} <button id="${movie.Title}Add" class="btn btn-secondary">Nominate</button></li>`;
 
-                document.querySelector(`#${movie.Title}Add`).addEventListener("click", (e) => { 
-                        e.target.disabled=true;
-                        console.log(e.target)
-                        addToNominate(movie);
+                movies.Search.forEach(movie => {
+
+                    let detailsNode = document.createElement("li");
+                    let btnNode = document.createElement("button");
+                    btnNode.innerHTML = "Nominate";
+                    btnNode.setAttribute("id", `${movie.Title}Add`);
+                    btnNode.addEventListener("click", (e) => {
+                            e.target.disabled=true;
+                            addToNominate(movie);
                     })
 
+                    detailsNode.innerHTML = `${movie.Title}, ${movie.Year}`
+
+                    detailsNode.appendChild(btnNode);
+                    results.appendChild(detailsNode);
+                })
             }
 
-            
-
-        })
-        .catch(e => console.log(`Exception caught${e}`));
+        }).catch(e => console.log(`Exception caught${e}`));
 }
+
+
 
 const addToNominate = (movie) => {
 
+    
+
     document.querySelector("#nominationList").innerHTML="";
     nominatedMovies.push(movie)
-
+    console.log(nominatedMovies);
     nominatedMovies.forEach(movie => {
-        document.querySelector("#nominationList").innerHTML += 
-            `<li>${movie.Title}, ${movie.Year} <button id="${movie.Title}Remove" class="btn btn-secondary">Remove</button></li>`;
-        
-    })
 
-    document.querySelector(`${movie.Title}Remove`).addEventListener('click', () => {
-        
+            let detailsNode = document.createElement("li");
+            detailsNode.innerHTML = `${movie.Title}, ${movie.Year}`;
+            let btnNode = document.createElement("button");
+            btnNode.innerHTML = "Remove";
+            btnNode.setAttribute("id", `${movie.Title}Remove`);
+            btnNode.addEventListener("click", (e) => {
+                e.target.disabled=true;
+                document.querySelector(`#${movie.Title}Add`).disabled=false;
+            
+        })
+
+
+
+        detailsNode.appendChild(btnNode);
+        document.querySelector("#nominationList").appendChild(detailsNode)
     })
 
     if (nominatedMovies.length === 5){
-        console.alert("All done");
+        console.log("All done");
     }
 }
+
+
+
+
 
 searchBtn.addEventListener("click", () => {
     results.innerHTML="";
 
-    let link = "http://www.omdbapi.com/?i=tt3896198&apikey=824b361b&t=" + searchDetails.value;
+    let link = "http://www.omdbapi.com/?i=tt3896198&apikey=824b361b&s=" + searchDetails.value;
     searchForMovie(link)
 })
 
@@ -65,7 +96,7 @@ searchDetails.addEventListener("keydown", (e) => {
     if (e.key === 'Enter') {
             
         results.innerHTML="";
-        let link = "http://www.omdbapi.com/?i=tt3896198&apikey=824b361b&t=" + searchDetails.value;
+        let link = "http://www.omdbapi.com/?i=tt3896198&apikey=824b361b&s=" + searchDetails.value;
         searchForMovie(link)
     }
 })
