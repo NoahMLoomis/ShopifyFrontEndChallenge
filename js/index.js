@@ -4,6 +4,7 @@ const results = document.querySelector("#movieResultList");
 const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
 let nominatedMovies=[];
 
+//Always use const!!!
 for (let i=0; i<26; i++){
 
 }
