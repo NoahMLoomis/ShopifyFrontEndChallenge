@@ -1,39 +1,104 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
 body{
-    font-family:'Roboto Mono', monospace, Verdana, sans-serif
-
+    font-family:'Roboto Mono', monospace, Verdana, sans-serif;
+    background-color: #0BC9CD;
+    background-image: url("/images/oscar.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    
+    
 }
 
-ul{
-   list-style: none;
+#finishedNominations{
+    background-color: #7C77B9;
+    margin-right: auto;
+    margin-left: auto;
+    width: 500px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding-top: 10px;
+    margin-top: 100px;
 }
+
+#startAgain{
+    margin-bottom: 10px;
+}
+
 #header{
     margin-top: 20px;
     text-align: center;
 }
 
 #searchBar{
-    width: 80%;
+    width: 70%;
+    height: 38px;
     margin-right: auto;
     margin-left: auto;
     border-radius: 5px;
 }
 
+#errorMsg{
+    color: red;
+    font-weight: 400;
+    font-size: larger;
+}
+
+
 #main{
     padding: 20px;
-    display: grid;
-    grid-template-columns:300px  300px;
-    grid-template-rows: 100px;
-    justify-content: center;
     text-align: center;
+}
+#searchBtn{
+    margin-bottom: 5px;
+}
+
+#searchResults{
+    float: left;
+    max-width: 70%;
+}
+
+#nominations{
+    float: right;
+    position: fixed;
+    margin-left: 65%;
+
+}
+
+
+img{
+    padding: 5px;
+}
+
+#title{
+    font-weight: bolder;
+}
+#movieResultList{
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.singleMovie{
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #7C77B9;
+    width: 200px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 5px;
+    height: 400px;
 }
 
 #footer{
-    height: 30px;
+    background-color: #0BC9CD;
+    height: 50px;
     position: fixed;
     width: 100%;
     left: 0;
     bottom: 0;
     text-align: center;
+    
 }
