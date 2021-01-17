@@ -1,6 +1,8 @@
-const searchBtn = document.querySelector("#searchBtn");
-const searchDetails = document.querySelector("#searchBar");
-const results = document.querySelector("#movieResultList");
+const $$ = (id) => document.querySelector(id);
+const searchBtn = $$("#searchBtn");
+const searchDetails = $$("#searchBar");
+const results = $$("#movieResultList");
+
 let nominatedMovies = [];
 
 /*
@@ -22,15 +24,20 @@ const searchForMovie = (link) => {
     fetch(link)
         .then(data => data.json())
         .then(movies => {
-            console.log(movies);
-            if ((movies.Response === "False") || (document.querySelector("#searchBar").value ==="")) {
+
+            
+
+            if ((movies.Response === "False") || (searchDetails.value ==="")) {
                 //Hiding all movies, displaying error message
+
                 document.getElementById("errorMsg").setAttribute("class", "animate__animated animate__headShake")
                 document.getElementById("errorMsg").hidden = false;
                 document.getElementById("searchResults").hidden = true;
                 document.getElementById("nominations").hidden = true;
             } else {
+
                 //Hide error message, show movies, add class names for animations
+                
                 document.getElementById("errorMsg").hidden = true;
                 document.getElementById("searchResults").hidden = false;
                 document.getElementById("nominations").hidden = false;
@@ -38,10 +45,13 @@ const searchForMovie = (link) => {
                 document.getElementById("searchResults").setAttribute("class", "animate__animated animate__backInDown") 
                 document.getElementById("nominations").setAttribute("class", "animate__animated animate__backInDown") 
 
-                document.querySelector("#searchWord").textContent = document.querySelector("#searchBar").value
+                $$("#searchWord").textContent = searchDetails.value
 
-                document.querySelector("#numResults").textContent= movies.Search.length
+                $$("#numResults").textContent= movies.Search.length
 
+                /*
+                Creating individual div for each movie and appending to "results" div
+                */
 
                 movies.Search.forEach(movie => {
                     let detailsNode = document.createElement("div");
@@ -65,6 +75,9 @@ const searchForMovie = (link) => {
 
                     detailsNode.innerHTML = `${movie.Title}, ${movie.Year}<br/>`
 
+                    /*
+                    This makes sure that if a movie pops up on a different search, the Nominate btn is disabled
+                    */
                     if (checkNominate(movie)) {
                         console.log("movie already nominated")
                         btnNode.setAttribute("disabled", "true");
@@ -80,12 +93,14 @@ const searchForMovie = (link) => {
 }
 
 
+    /*
+    Adds the selected movie to the "Nominated" section on the right side
+    */
 
 const addToNominate = (movie) => {
 
-    document.querySelector("#nominationList").innerHTML = "";
+    $$("#nominationList").innerHTML = "";
     nominatedMovies.push(movie)
-    console.log(nominatedMovies);
     nominatedMovies.forEach(movie => {
 
         let detailsNode = document.createElement("li");
@@ -98,21 +113,24 @@ const addToNominate = (movie) => {
 
         btnNode.addEventListener("click", (e) => {
             e.target.disabled = true;
-            if (document.querySelector(`#${movie.imdbID}Add`) !== null)
-                document.querySelector(`#${movie.imdbID}Add`).disabled = false;
+            if ($$(`#${movie.imdbID}Add`) !== null)
+                $$(`#${movie.imdbID}Add`).disabled = false;
             detailsNode.className = "animate__animated animate__bounceOut";
             let removeEl = nominatedMovies.indexOf(movie);
 
             (removeEl > -1) ? (nominatedMovies.splice(removeEl, 1)) : null;
         })
         detailsNode.appendChild(btnNode);
-        document.querySelector("#nominationList").appendChild(detailsNode)
+        $$("#nominationList").appendChild(detailsNode)
     })
 
+    /*
+    If 5 movies are nominated, transition out and show banner
+    */
     if (nominatedMovies.length === 5) {
 
         document.getElementById("main").setAttribute("class", "animate__animated animate__bounceOut")
-        document.querySelector("#header").setAttribute("class", "animate__animated animate__bounceOut")
+        $$("#header").setAttribute("class", "animate__animated animate__bounceOut")
 
 
         setTimeout(() => {
@@ -126,11 +144,11 @@ const addToNominate = (movie) => {
         nominatedMovies.forEach(movie => {
             let detailsNode = document.createElement("li");
             detailsNode.innerHTML = `${movie.Title}, ${movie.Year} <br/>`;
-            document.querySelector("#bannerNominations").appendChild(detailsNode);
+            $$("#bannerNominations").appendChild(detailsNode);
         })
     }
     
-    document.querySelector("#startAgain").addEventListener("click", () => {
+    $$("#startAgain").addEventListener("click", () => {
         document.getElementById("finishedNominations").setAttribute("class","animate__animated animate__backOutDown"); 
         setTimeout( () => {
             location.reload();
@@ -140,6 +158,10 @@ const addToNominate = (movie) => {
         
 }
 
+
+/*
+Event listeners for both "Enter" and a click on the search
+*/
 
 
 searchBtn.addEventListener("click", () => {
