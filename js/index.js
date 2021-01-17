@@ -144,14 +144,14 @@ const addToNominate = (movie) => {
 
 searchBtn.addEventListener("click", () => {
     results.innerHTML = "";
-    let link = "http://www.omdbapi.com/?i=tt3896198&apikey=824b361b&s=" + searchDetails.value;
+    let link = "https://www.omdbapi.com/?i=tt3896198&apikey=824b361b&s=" + searchDetails.value;
     searchForMovie(link)
 })
 
 searchDetails.addEventListener("keyup", (e) => {
     if (e.key === 'Enter') {
         results.innerHTML = "";
-        let link = "http://www.omdbapi.com/?i=tt3896198&apikey=824b361b&s=" + searchDetails.value;
+        let link = "https://www.omdbapi.com/?i=tt3896198&apikey=824b361b&s=" + searchDetails.value;
         searchForMovie(link)
     }
 })
